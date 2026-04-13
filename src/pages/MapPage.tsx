@@ -20,6 +20,9 @@ export default function MapPage() {
   const [cardVisible, setCardVisible] = useState(false);
   const [locationError, setLocationError] = useState<string | null>(null);
   const [isLocating, setIsLocating] = useState(false);
+  const [locationMode, setLocationMode] = useState<'my-location' | 'search-area'>('my-location');
+  const [areaQuery, setAreaQuery] = useState('');
+  const [isGeocoding, setIsGeocoding] = useState(false);
 
   const { isLoaded, isError: mapsError } = useGoogleMaps();
   const { trucks, status, error, searchNearby } = useNearbyTrucks();
@@ -106,6 +109,28 @@ export default function MapPage() {
     if (isLoaded && googleMapRef.current) locateAndSearch();
   }, [isLoaded, locateAndSearch]);
 
+  const searchByArea = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!areaQuery.trim() || !isLoaded) return;
+    setIsGeocoding(true);
+    setLocationError(null);
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ address: areaQuery.trim() }, (results, status) => {
+      setIsGeocoding(false);
+      if (status === 'OK' && results && results[0]) {
+        const loc = {
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng(),
+        };
+        googleMapRef.current!.setCenter(loc);
+        googleMapRef.current!.setZoom(13);
+        searchNearby(loc);
+      } else {
+        setLocationError('Could not find that location. Try a city or address.');
+      }
+    });
+  }, [areaQuery, isLoaded, searchNearby]);
+
   // Preload images
   useEffect(() => {
     trucks.forEach((truck) => {
@@ -165,15 +190,45 @@ export default function MapPage() {
       <div className="map-sidebar">
         <div className="map-sidebar-header">
           <h2>Nearby Food Trucks</h2>
-          <button className="locate-btn" onClick={locateAndSearch} disabled={!isLoaded}>
-            <LocateFixed size={14} strokeWidth={2.5} />
-            My Location
-          </button>
+          <div className="location-toggle">
+            <button
+              className={`toggle-btn ${locationMode === 'my-location' ? 'active' : ''}`}
+              onClick={() => { setLocationMode('my-location'); locateAndSearch(); }}
+              disabled={!isLoaded}
+            >
+              <LocateFixed size={12} strokeWidth={2.5} />
+              My Location
+            </button>
+            <button
+              className={`toggle-btn ${locationMode === 'search-area' ? 'active' : ''}`}
+              onClick={() => setLocationMode('search-area')}
+              disabled={!isLoaded}
+            >
+              Search Area
+            </button>
+          </div>
         </div>
+
+        {locationMode === 'search-area' && (
+          <form className="area-search-form" onSubmit={searchByArea}>
+            <input
+              type="text"
+              className="area-search-input"
+              placeholder="City, neighborhood, or address..."
+              value={areaQuery}
+              onChange={(e) => setAreaQuery(e.target.value)}
+              autoComplete="off"
+            />
+            <button type="submit" className="area-search-btn" disabled={!isLoaded || !areaQuery.trim() || isGeocoding}>
+              {isGeocoding ? '...' : 'Go'}
+            </button>
+          </form>
+        )}
 
         {locationError && <p className="location-error">{locationError}</p>}
         {isLocating && <p className="map-loading">Getting your location...</p>}
-        {!isLocating && status === 'loading' && <p className="map-loading">Searching for trucks...</p>}
+        {!isLocating && !isGeocoding && status === 'loading' && <p className="map-loading">Searching for trucks...</p>}
+        {isGeocoding && <p className="map-loading">Finding location...</p>}
         {error && <p className="map-error-text">{error}</p>}
         {status === 'success' && trucks.length === 0 && (
           <p className="map-empty">No food trucks found nearby.</p>
