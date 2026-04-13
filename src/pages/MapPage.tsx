@@ -189,7 +189,9 @@ export default function MapPage() {
     <div className="map-page">
       <div className="map-sidebar">
         <div className="map-sidebar-header">
-          <h2>Nearby Food Trucks</h2>
+          <div>
+            <h2>Nearby Food Trucks</h2>
+          </div>
           <div className="location-toggle">
             <button
               className={`toggle-btn ${locationMode === 'my-location' ? 'active' : ''}`}

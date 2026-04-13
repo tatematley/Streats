@@ -6,7 +6,9 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <NavLink to="/" className="navbar-brand">
-        <img src="/StreatsLogo.png" alt="Streats" className="navbar-logo" />
+        <div className="navbar-logo-wrap">
+          <img src="/StreatsLogo.png" alt="Streats" className="navbar-logo" />
+        </div>
       </NavLink>
       <div className="navbar-center">
         <SearchBar />

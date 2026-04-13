@@ -17,8 +17,15 @@
   text-decoration: none;
 }
 
+.navbar-logo-wrap {
+  height: 42px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
 .navbar-logo {
-  height: 50px;
+  height: 68px;
   width: auto;
   display: block;
   mix-blend-mode: screen;
