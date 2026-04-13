@@ -1,6 +1,6 @@
 # Streats 🚚
 
-Streats is a food truck finder web app built for IS 542. It helps users find food trucks nearby, search for specific trucks, view important details, and save their favorites.
+Streats is a food truck finder web app built to help users find food trucks nearby, search for specific trucks, view important details, and save their favorites.
 
 It is a single-page app that works on both desktop and mobile.
 
