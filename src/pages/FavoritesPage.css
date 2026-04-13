@@ -1,0 +1,79 @@
+.favorites-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.favorites-page h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 0 0 1.5rem;
+  color: #111;
+}
+
+.favorites-count {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0 0 1rem;
+}
+
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+}
+
+@media (max-width: 700px) {
+  .favorites-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .favorites-grid {
+    grid-template-columns: 1fr;
+  }
+  .favorites-page {
+    padding: 1.25rem 1rem;
+  }
+}
+
+.favorites-empty {
+  text-align: center;
+  padding: 5rem 2rem;
+  color: #888;
+}
+
+.favorites-empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: var(--brand-light);
+  color: var(--brand);
+  margin: 0 auto 1rem;
+  opacity: 0.7;
+}
+
+.favorites-empty p {
+  font-size: 1rem;
+  margin: 0 0 1.5rem;
+}
+
+.favorites-explore-btn {
+  background: #ff6b00;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.favorites-explore-btn:hover {
+  background: #e05e00;
+}

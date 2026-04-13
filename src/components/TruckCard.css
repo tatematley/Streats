@@ -1,0 +1,126 @@
+.truck-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.truck-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.truck-card-image {
+  width: 100%;
+  height: 155px;
+  overflow: hidden;
+  background: #f0f0f0;
+  position: relative;
+}
+
+.truck-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.truck-card-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c8c8c8;
+  background: #f7f7f7;
+}
+
+.truck-card-placeholder.hidden {
+  display: none;
+}
+
+.truck-card-body {
+  padding: 0.85rem 1rem;
+}
+
+.truck-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.truck-card-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-primary);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.truck-card-cuisine {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin: 0.2rem 0 0.4rem;
+  text-transform: capitalize;
+}
+
+.truck-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.truck-card-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--brand);
+}
+
+.truck-card-status {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 20px;
+}
+
+.truck-card-status.open {
+  background: var(--open-bg);
+  color: var(--open-text);
+}
+
+.truck-card-status.closed {
+  background: var(--closed-bg);
+  color: var(--closed-text);
+}
+
+.fav-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #d0d0d0;
+  padding: 0;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s, transform 0.15s;
+  flex-shrink: 0;
+}
+
+.fav-btn:hover {
+  transform: scale(1.15);
+  color: var(--brand);
+}
+
+.fav-btn--active {
+  color: var(--brand);
+}
