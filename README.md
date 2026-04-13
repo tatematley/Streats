@@ -1,73 +1,98 @@
-# React + TypeScript + Vite
+# Streats 🚚
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Streats is a food truck finder web app built for IS 542. It helps users find food trucks nearby, search for specific trucks, view important details, and save their favorites.
 
-Currently, two official plugins are available:
+It is a single-page app that works on both desktop and mobile.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Project Description
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The goal of Streats is to make it easy to discover food trucks near you. Users can:
 
-## Expanding the ESLint configuration
+- See nearby food trucks on an interactive map
+- Search for food trucks by name or keyword
+- View details like rating, address, phone number, and website
+- Save favorite trucks to come back to later
+- Use the app on desktop or mobile
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## How to Run the Project
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Prerequisites
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+You will need:
+
+- Node.js version 18 or later
+- A Google Maps API key with these enabled:
+  - Maps JavaScript API
+  - Places API (New)
+
+### Setup
+
+1. Clone the repo:
+
+```bash
+git clone https://github.com/tatematley/Streats.git
+cd Streats
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Install dependencies:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+3. Create a `.env` file in the root folder and add:
+
+```env
+VITE_GOOGLE_MAPS_API_KEY=your_api_key_here
+```
+
+4. Start the app:
+
+```bash
+npm run dev
+```
+
+5. Open it in your browser at:
+
+```bash
+http://localhost:5173
+```
+
+---
+
+## APIs Used and How Data Is Handled
+
+### Google Maps JavaScript API
+
+This is used to render the map and display food truck locations as markers.
+
+### Google Places API (New)
+
+This is used to search for food trucks and get more detailed place information.
+
+- `Place.searchByText()` is used to search for food trucks based on location or keyword
+- `Place.fetchFields()` is used to load more detailed info when a user opens a truck page
+
+### Data Handling
+
+- The app uses the browser’s Geolocation API to get the user’s location
+- That location is used to search for nearby food trucks
+- Results are stored in state as typed `FoodTruck` objects
+- Truck data is passed through route state when moving to a detail page so it loads faster
+- More details are fetched only when needed
+- Favorites are saved in `localStorage` so they persist across sessions
+
+---
+
+## Additional Features Implemented
+
+- Save and remove favorite food trucks
+- Search for trucks by keyword
+- Mobile-friendly responsive layout
+- Quick info card when a map marker is clicked
+- Image preloading for smoother browsing
+- Faster detail page loading through route state
